@@ -1,0 +1,25 @@
+replicaCount: 1
+
+image:
+  repository: dockeragent
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext:
+  capabilities:
+    drop:
+      - ALL
+  readOnlyRootFilesystem: false 
+  runAsNonRoot: true
+  runAsUser: 1000
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+
+affinity: {}
