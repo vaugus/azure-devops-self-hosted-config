@@ -1,18 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "self-hosted-agent.fullname" . }}
+  name: azure-devops-agent
   labels:
-    {{- include "self-hosted-agent.labels" . | nindent 4 }}
+    helm.sh/chart: {{ include "self-hosted-agent.chart" . }}
+    app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      {{- include "self-hosted-agent.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/name: self-hosted-agent
+      app.kubernetes.io/instance: release-name
   template:
     metadata:
       labels:
-        {{- include "self-hosted-agent.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/name: self-hosted-agent
+        app.kubernetes.io/instance: release-name
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -30,22 +34,22 @@ spec:
           - name: AZP_URL
             valueFrom:
               secretKeyRef:
-                name: azure-devops-agent-secret
+                name: {{ .Values.secretName }}
                 key: AZP_URL
           - name: AZP_TOKEN
             valueFrom:
               secretKeyRef:
-                name: azure-devops-agent-secret
+                name: {{ .Values.secretName }}
                 key: AZP_TOKEN
           - name: AZP_POOL
             valueFrom:
               secretKeyRef:
-                name: azure-devops-agent-secret
+                name: {{ .Values.secretName }}
                 key: AZP_POOL
           - name: AZP_AGENT_NAME
             valueFrom:
               secretKeyRef:
-                name: azure-devops-agent-secret
+                name: {{ .Values.secretName }}
                 key: AZP_AGENT_NAME
       {{- with .Values.affinity }}
       affinity:
