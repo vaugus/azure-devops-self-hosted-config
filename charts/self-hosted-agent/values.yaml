@@ -1,12 +1,13 @@
 replicaCount: 1
 
+secretName: azure-devops-agent-secret
+
 image:
   repository: dockeragent
   pullPolicy: IfNotPresent
   tag: "latest"
 
 podSecurityContext: {}
-  # fsGroup: 2000
 
 securityContext:
   capabilities:
