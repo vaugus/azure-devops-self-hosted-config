@@ -24,3 +24,11 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
 
 affinity: {}
+
+secret:
+  secretName: azure-devops-agent-secret
+  environment:
+    AZP_URL: foo-url
+    AZP_TOKEN: foo-token
+    AZP_POOL: foo-pool
+    AZP_AGENT_NAME: foo-agent
