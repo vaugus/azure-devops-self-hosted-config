@@ -1,11 +1,11 @@
-name: build the docker image and scan vunerabilities
+name: build the docker image, scan vunerabilities, lint and test the Helm chart
 
 on:
   push:
 
 jobs:
   build:
-    name: Build and scan
+    name: Build, scan, lint, and test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
