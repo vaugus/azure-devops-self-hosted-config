@@ -30,3 +30,6 @@ jobs:
       - name: Helm Lint
         run: helm lint charts/self-hosted-agent
 
+      - name: Helm Unit test
+        run: helm unittest -3 charts/self-hosted-agent
+
