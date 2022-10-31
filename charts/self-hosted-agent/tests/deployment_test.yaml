@@ -1,0 +1,19 @@
+suite: deployment test
+
+templates:
+  - deployment.yaml
+
+tests:
+  - it: given an empty environment, then nothing is created.
+    set:
+      secret:
+        secretName: "test"
+        environment: null
+    asserts:
+      - hasDocuments:
+          count: 0
+
+  - it: given proper environment values, the deployment is created.
+    asserts:
+      - hasDocuments:
+          count: 1
